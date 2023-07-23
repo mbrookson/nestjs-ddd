@@ -1,5 +1,5 @@
 import { EventPublisher } from '../../application/core/event-publisher';
-import { DomainEvent } from './domain-event';
+import { DomainEventBase } from './domain-event';
 
 type Props = {
   id: any;
@@ -7,13 +7,13 @@ type Props = {
 
 export abstract class AggregateRoot<TProps extends Props> {
   readonly id: TProps['id'];
-  readonly events: DomainEvent[] = [];
+  readonly events: DomainEventBase[] = [];
 
   constructor(protected readonly props: TProps) {
     this.id = props.id;
   }
 
-  addEvent(event: DomainEvent) {
+  addEvent(event: DomainEventBase) {
     this.events.push(event);
   }
 
