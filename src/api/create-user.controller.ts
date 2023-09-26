@@ -1,7 +1,7 @@
 import { Controller, Post } from '@nestjs/common';
 import { CreateUserHandler } from 'src/application/create-user.command';
+import { UseUnitOfWork } from 'src/infrastructure/unit-of-work.decorator';
 import { UnitOfWorkProvider } from 'src/infrastructure/unit-of-work.provider';
-import { UseTransactionScope } from './core/transaction.interceptor';
 
 @Controller()
 export class CreateUserController {
@@ -11,7 +11,7 @@ export class CreateUserController {
   ) {}
 
   @Post('users')
-  @UseTransactionScope()
+  @UseUnitOfWork()
   async createUser() {
     const userId = await this.handler.handle();
     return { userId };
